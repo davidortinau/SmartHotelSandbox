@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartHotelSandbox", "SmartH
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartHotelSandbox.iOS", "SmartHotelSandbox.iOS\SmartHotelSandbox.iOS.csproj", "{450F2B8A-56B7-4801-8322-190E458B94FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartHotelSandbox.Shared", "SmartHotelSandbox.Shared\SmartHotelSandbox.Shared.csproj", "{172479DC-EB06-42AD-8141-6CBC045AD9EF}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU

@@ -1,40 +1,192 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:effects="clr-namespace:SmartHotel.Clients.Core.Effects"
+             
+             xmlns:controls="clr-namespace:SmartHotel.Clients.Core.Controls"
+             Title="Sandbox"
              x:Class="SmartHotelSandbox.MainPage">
+    <ContentPage.Resources>
+        
+        
+        <!-- <Style x:Key="BaseEntryStyle" -->
+        <!--        TargetType="{x:Type controls:ExtendedEntry}"> -->
+        <!--      -->
+        <!--     <Setter Property="Background" -->
+        <!--             Value="Green" /> -->
+        <!--     <Setter Property="TextColor" -->
+        <!--             Value="{StaticResource Black}" /> -->
+        <!--     <Setter Property="PlaceholderColor" -->
+        <!--             Value="{StaticResource Black}" /> -->
+        <!--     <Setter Property="HeightRequest" -->
+        <!--             Value="44" /> -->
+        <!--     <Setter Property="FontSize" -->
+        <!--             Value="18" /> -->
+        <!--     <Setter Property="HorizontalOptions" -->
+        <!--             Value="Fill" /> -->
+        <!--     <Setter Property="FontAttributes" -->
+        <!--             Value="Bold" /> -->
+        <!--     <Setter Property="Opacity" -->
+        <!--             Value="0.6" /> -->
+        <!--     <Style.Triggers> -->
+        <!--         <Trigger TargetType="Entry" -->
+        <!--                  Property="IsFocused"  -->
+        <!--                  Value="True"> -->
+        <!--             <Setter Property="Opacity" Value="1" /> -->
+        <!--         </Trigger> -->
+        <!--     </Style.Triggers> -->
+        <!-- </Style> -->
+        <!-- -->
+        <!-- <Style TargetType="{x:Type controls:ExtendedEntry}" -->
+        <!--        BasedOn="{StaticResource BaseEntryStyle}" /> -->
+        
+    </ContentPage.Resources>
 
     <ScrollView>
         <VerticalStackLayout
             Spacing="25"
             Padding="30,0"
-            VerticalOptions="Center">
-
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
-
+            VerticalOptions="Start" x:Name="VStack">
+            
             <Label
-                Text="Hello, Sandbox!"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
+                Text="Effect"
+                FontSize="24" />
+            
+            <Label 
+                HeightRequest="24"
+                HorizontalTextAlignment="End"
+                TextColor="Black"
+                Text="Forgot Password"
+                Style="{StaticResource ForgotPwdLabelStyle}"
+                >
+                <Label.Effects>
+                    <effects:UnderlineTextEffect />
+                </Label.Effects>
+            </Label>
+            
+            <Label Text="ExtendedEntry" FontSize="24"/>
+            
+            
+            <controls:ExtendedEntry
+                x:Name="UsernameEntry"
+                TextColor="Black"
+                Placeholder="username"
+                HorizontalOptions="Start"
+                HeightRequest="44"
+                Background="Transparent"
+                WidthRequest="320">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="UniqueStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="LineColor" Value="{Binding Path=TextColor, Source={x:Reference UsernameEntry}}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Focused">
+                            <VisualState.Setters>
+                                <Setter Property="LineColor" Value="{StaticResource FocusLineColor}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Invalid">
+                            <VisualState.Setters>
+                                <Setter Property="LineColor" Value="{StaticResource InvalidLineColor}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </controls:ExtendedEntry>
+            
+            <Entry Placeholder="Bare Entry" />
+            
+            <Label Text="ViewCell" FontSize="24"/>
+            
+            <ListView 
+                            x:Name="SuggestionsList" 
+                            ItemsSource="{Binding Suggestions}"          
+                            SelectedItem="{Binding Suggestion, Mode=TwoWay}"
+                            Style="{StaticResource SuggestionsListStyle}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <Grid 
+                                            x:Name="SuggestionCell"
+                                            ColumnSpacing="0"
+                                            BackgroundColor="{StaticResource WhiteColor}">
+                                            <Grid.HeightRequest>
+                                                <OnPlatform x:TypeArguments="x:Double">
+                                                    <On Platform="Android, iOS" Value="60" />
+                                                    <On Platform="UWP" Value="64" />
+                                                </OnPlatform>
+                                            </Grid.HeightRequest>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="12" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="12" />
+                                            </Grid.ColumnDefinitions>
+                                            <Image
+                                                Grid.Column="1" 
+                                                x:Name="SuggestionCorner" 
+                                                Aspect="AspectFit"
+                                                IsVisible="{Binding Source={x:Reference SuggestionsList}, Path=SelectedItem, 
+                                                Converter={StaticResource SelectedToBoolConverter},
+                                                ConverterParameter={x:Reference SuggestionCell}}"
+                                                Margin="0, 2">
+                                                <Image.Source>
+                                                    <OnPlatform x:TypeArguments="ImageSource">
+                                                        <On Platform="Android, iOS" Value="ball_left" />
+                                                        <On Platform="UWP" Value="Assets/ball_left.png" />
+                                                    </OnPlatform>
+                                                </Image.Source>
+                                            </Image>
+                                            <Grid
+                                                Grid.Column="2" 
+                                                HeightRequest="{Binding Source={x:Reference SuggestionCorner}, Path=HeightRequest}"
+                                                BackgroundColor="{StaticResource SelectedBackgroundColor}"
+                                                IsVisible="{Binding Source={x:Reference SuggestionsList}, Path=SelectedItem, 
+                                                Converter={StaticResource SelectedToBoolConverter},
+                                                ConverterParameter={x:Reference SuggestionCell}}">
+                                                <Grid.Margin>
+                                                    <OnPlatform x:TypeArguments="Thickness">
+                                                        <On Platform="Android" Value="0, 6" />
+                                                        <On Platform="iOS, UWP" Value="0, 2" />
+                                                    </OnPlatform>
+                                                </Grid.Margin>
+                                            </Grid>
+                                            <Image
+                                                Grid.Column="3" 
+                                                Aspect="AspectFit"
+                                                IsVisible="{Binding Source={x:Reference SuggestionsList}, Path=SelectedItem, 
+                                                Converter={StaticResource SelectedToBoolConverter},
+                                                ConverterParameter={x:Reference SuggestionCell}}"
+                                                Margin="0, 2">
+                                                <Image.Source>
+                                                    <OnPlatform x:TypeArguments="ImageSource">
+                                                        <On Platform="Android, iOS" Value="ball_right" />
+                                                        <On Platform="UWP" Value="Assets/ball_right.png" />
+                                                    </OnPlatform>
+                                                </Image.Source>
+                                            </Image>
+                                            <Label 
+                                                Grid.Column="0"
+                                                Grid.ColumnSpan="3"
+                                                Text="{Binding Name}"/>
+                                        </Grid>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
 
-            <Label
-                Text="Welcome to .NET Multi-platform App UI"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
+            <Label Text="Custom Map" FontSize="24"/>
 
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
-
+            <controls:CustomMap  
+                x:Name="Map"
+                CustomPins="{Binding CustomPins}"
+                HeightRequest="300"
+                WidthRequest="300"
+                />
+                               
         </VerticalStackLayout>
     </ScrollView>
 

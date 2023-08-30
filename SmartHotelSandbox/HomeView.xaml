@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    x:Name="Self"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="SmartHotel.Clients.Core.Views.HomeView"
+    xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+    ios:Page.UseSafeArea="True" 
+    Shell.BackgroundColor="Transparent"
+    BackgroundColor="{StaticResource BackgroundColor}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+	        <Color x:Key="ChartBackgroundColor">#F2F2F2</Color>
+
+			<Style x:Key="BookTextStyle" 
+                   TargetType="Label"
+                   BasedOn="{StaticResource PoppinsMediumLabelStyle}">
+                <Setter Property="TextColor" Value="{StaticResource WhiteColor}" />
+                <Setter Property="FontSize" Value="{StaticResource LittleSize}" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+                <Setter Property="Margin" Value="24, 0" />
+            </Style>
+
+            <Style x:Key="BookConferenceTextStyle" 
+                   TargetType="Label" 
+                   BasedOn="{StaticResource BookTextStyle}">
+                <Setter Property="TextColor" Value="{StaticResource OrangeColor}" />
+            </Style>
+
+            <OnPlatform x:Key="ChartTextSize"
+                        x:TypeArguments="x:Double">
+                <On Platform="iOS,Android" Value="10" />
+                <On Platform="WinUI" Value="11" />
+            </OnPlatform>
+                 
+            <Style x:Key="ChartTextStyle" 
+                   TargetType="Label"
+                   BasedOn="{StaticResource PoppinsSemiBoldLabelStyle}">
+                <Setter Property="TextColor" Value="{StaticResource BlackTextColor}" />
+                <Setter Property="FontSize" Value="{StaticResource ChartTextSize}" />
+                <Setter Property="VerticalOptions" Value="Start" />
+                <Setter Property="Margin" Value="16, 16, 0, 0" />
+            </Style>
+
+            <Style x:Key="BeGreenTextStyle" 
+                   TargetType="Label"
+                   BasedOn="{StaticResource ChartTextStyle}">
+                <Setter Property="Margin" Value="16, 0, 0, 0" />
+            </Style>
+
+            <Style x:Key="SuggestionsTextStyle" 
+                   TargetType="Label"
+                   BasedOn="{StaticResource PoppinsMediumLabelStyle}">
+                <Setter Property="TextColor" Value="{StaticResource OrangeColor}" />
+                <Setter Property="FontSize" Value="{StaticResource LittleSize}" />
+                <Setter Property="Margin" Value="16, 16, 0, 0" />
+            </Style>
+
+            <Style x:Key="RestaurantTextStyle" 
+                   TargetType="Label"
+                   BasedOn="{StaticResource PoppinsMediumLabelStyle}">
+                <Setter Property="TextColor" Value="{StaticResource BlackTextColor}" />
+                <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
+                <Setter Property="Margin" Value="16, 0" />
+            </Style>
+
+            <Style x:Key="RestaurantDetailTextStyle" 
+                   TargetType="Label" 
+                   BasedOn="{StaticResource RestaurantTextStyle}">
+                <Setter Property="FontSize" 
+                        Value="{StaticResource LittleSize}" />
+                <Setter Property="FontFamily"
+                    Value="FiraSansRegular" />
+            </Style>
+
+            <Style x:Key="SeeAllTextStyle" 
+                   TargetType="Label"
+                   BasedOn="{StaticResource SuggestionsTextStyle}">
+                <Setter Property="HorizontalTextAlignment" Value="End" />
+                <Setter Property="Margin" Value="0, 16, 16, 0" />
+            </Style>
+
+            <Style x:Key="GoMyRoomPanelStyle" 
+                   TargetType="Grid">
+                <Setter Property="BackgroundColor" Value="{StaticResource OrangeColor}" />
+                <Setter Property="HeightRequest" Value="60" />
+                <Setter Property="VerticalOptions" Value="End" />
+            </Style>
+
+            <Style x:Key="GoMyRoomPanel2Style" 
+                   TargetType="Grid"
+                   BasedOn="{StaticResource GoMyRoomPanelStyle}">
+                <Setter Property="HeightRequest" Value="48" />
+            </Style>
+
+            <Color x:Key="BookConferencePanelColor">#378D93</Color>
+
+            <Style x:Key="BookConferencePanelStyle" 
+                   TargetType="Grid">
+                <Setter Property="BackgroundColor" Value="{StaticResource BookConferencePanelColor}" />
+                <Setter Property="HeightRequest" Value="60" />
+                <Setter Property="VerticalOptions" Value="End" />
+            </Style>
+
+            <Style x:Key="BookConferencePanel2Style" 
+                   TargetType="Grid"
+                   BasedOn="{StaticResource BookConferencePanelStyle}">
+                <Setter Property="HeightRequest" Value="48" />
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem  
+            Text="Open door"
+            Command="{Binding OpenDoorCommand}">
+            <ToolbarItem.IconImageSource>
+                <OnPlatform x:TypeArguments="ImageSource">
+                    <On Platform="Android, iOS" Value="ic_card" />
+                    <On Platform="UWP" Value="Assets/ic_card.png" />
+                </OnPlatform>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <Grid IgnoreSafeArea="True">
+            <Grid   IgnoreSafeArea="True"
+                    AutomationId="home"
+                    RowSpacing="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="4.6*" />
+                    <RowDefinition Height="5.4*" />
+                </Grid.RowDefinitions>
+                <!-- CAROUSEL -->
+                <Grid IgnoreSafeArea="True"
+                      Grid.Row="0">
+                    <Image 
+                        Aspect="AspectFill">
+                        <Image.Source>
+                            <OnPlatform x:TypeArguments="ImageSource">
+                                <On Platform="Android, iOS" Value="hero_image.png" />
+                                <On Platform="UWP" Value="Assets/hero_image.png" />
+                            </OnPlatform>
+                        </Image.Source>
+                    </Image>
+                    <!-- <CarouselView -->
+                    <!--     x:Name="Carousel"> -->
+                    <!--     <CarouselView.ItemTemplate> -->
+                    <!--         <DataTemplate> -->
+                    <!--             <templates:NotificationItemTemplate  -->
+                    <!--                 TapCommand="{Binding BindingContext.NotificationsCommand, Source={x:Reference Self}}" /> -->
+                    <!--         </DataTemplate> -->
+                    <!--     </CarouselView.ItemTemplate> -->
+                    <!-- </CarouselView> -->
+                    <Image 
+                        Margin="0, 30, 0, 12"
+                        VerticalOptions="Start"
+                        HorizontalOptions="Center"
+                        HeightRequest="74"
+                        Aspect="AspectFit">
+                        <Image.Source>
+                            <OnPlatform x:TypeArguments="ImageSource">
+                                <On Platform="Android, iOS" Value="simbol_logo" />
+                                <On Platform="UWP" Value="Assets/simbol_logo.png" />
+                            </OnPlatform>
+                        </Image.Source>
+                    </Image>
+                </Grid>
+                <!-- NO BOOKING -->
+                <!-- <Grid -->
+                <!--     ColumnSpacing="0" -->
+                <!--     RowSpacing="0" -->
+                <!--     Grid.Row="1"> -->
+                <!--     <Grid.ColumnDefinitions> -->
+                <!--         <ColumnDefinition /> -->
+                <!--         <ColumnDefinition /> -->
+                <!--     </Grid.ColumnDefinitions> -->
+                <!--     <Grid.RowDefinitions> -->
+                <!--         <RowDefinition Height="5.5*" /> -->
+                <!--         <RowDefinition Height="4.5*" /> -->
+                <!--     </Grid.RowDefinitions> -->
+                <!--     ~1~ BOOK A ROOM @1@ -->
+                <!--     <Grid -->
+                <!--         Grid.Row="0" -->
+                <!--         Grid.Column="0"> -->
+                <!--         <Grid.RowDefinitions> -->
+                <!--             <RowDefinition Height="75*" /> -->
+                <!--             <RowDefinition Height="25*" /> -->
+                <!--         </Grid.RowDefinitions> -->
+                <!--         <Image  -->
+                <!--             Grid.Row="0" -->
+                <!--             Grid.RowSpan="2" -->
+                <!--             Aspect="AspectFill" -->
+                <!--             Source="img_1.png" -->
+                <!--             /> -->
+                <!--         <Grid    -->
+                <!--             Grid.Row="1" -->
+                <!--             BackgroundColor="{StaticResource OrangeColor}"> -->
+                <!--             <Label -->
+                <!--                 Text="{extensions:Translate BookMayus}" -->
+                <!--                 Style="{StaticResource BookTextStyle}"/> -->
+                <!--         </Grid> -->
+                <!--         <Grid.GestureRecognizers> -->
+                <!--             <TapGestureRecognizer  -->
+                <!--                 Command="{Binding BookRoomCommand}" /> -->
+                <!--         </Grid.GestureRecognizers> -->
+                <!--     </Grid> -->
+                <!--     ~1~ BOOK CONFERENCE ROOM @1@ -->
+                <!--     <Grid -->
+                <!--         Grid.Row="0" -->
+                <!--         Grid.Column="1"> -->
+                <!--         <Grid.RowDefinitions> -->
+                <!--             <RowDefinition Height="75*" /> -->
+                <!--             <RowDefinition Height="25*" /> -->
+                <!--         </Grid.RowDefinitions> -->
+                <!--         <Image  -->
+                <!--             Grid.Row="0" -->
+                <!--             Grid.RowSpan="2" -->
+                <!--             Source="img_2"  -->
+                <!--             Aspect="AspectFill"/> -->
+                <!--         <Grid    -->
+                <!--             Grid.Row="1" -->
+                <!--             BackgroundColor="{StaticResource WhiteColor}"> -->
+                <!--             <Label -->
+                <!--                 Text="BOOK A&#x0a;CONFERENCE ROOM" -->
+                <!--                 Style="{StaticResource BookConferenceTextStyle}"/> -->
+                <!--         </Grid> -->
+                <!--         <Grid.GestureRecognizers> -->
+                <!--             <TapGestureRecognizer  -->
+                <!--                 Command="{Binding BookConferenceCommand}" /> -->
+                <!--         </Grid.GestureRecognizers> -->
+                <!--     </Grid> -->
+                <!--     ~1~ RESTAURANT @1@ -->
+                <!--     <Grid -->
+                <!--         Grid.Row="1" -->
+                <!--         Grid.Column="0" -->
+                <!--         BackgroundColor="{StaticResource WhiteColor}"> -->
+                <!--         <Grid.RowDefinitions> -->
+                <!--             <RowDefinition Height="3*" /> -->
+                <!--             <RowDefinition Height="7*" /> -->
+                <!--         </Grid.RowDefinitions> -->
+                <!--         <StackLayout -->
+                <!--             Grid.Row="0" -->
+                <!--             Orientation="Horizontal"> -->
+                <!--             <Label -->
+                <!--                 Text="{extensions:Translate Suggestions}" -->
+                <!--                 Style="{StaticResource SuggestionsTextStyle}"/> -->
+                <!--             <Label    -->
+                <!--                 Text="{extensions:Translate SeeAll}" -->
+                <!--                 HorizontalOptions="EndAndExpand" -->
+                <!--                 Style="{StaticResource SeeAllTextStyle}"/> -->
+                <!--         </StackLayout> -->
+                <!--         <StackLayout -->
+                <!--             Grid.Row="1"> -->
+                <!--             <Label             -->
+                <!--                 Text="{extensions:Translate Restaurant}" -->
+                <!--                 Style="{StaticResource RestaurantTextStyle}"/> -->
+                <!--             <Label    -->
+                <!--                 Text="{extensions:Translate EatToday}" -->
+                <!--                 Style="{StaticResource RestaurantDetailTextStyle}"/> -->
+                <!--             <StackLayout.GestureRecognizers> -->
+                <!--                 <TapGestureRecognizer  -->
+                <!--                     Command="{Binding SuggestionsCommand}" /> -->
+                <!--             </StackLayout.GestureRecognizers> -->
+                <!--         </StackLayout> -->
+                <!--     </Grid> -->
+                <!--     ~1~ MORE INFO @1@ -->
+                <!--     <Grid -->
+                <!--         Grid.Row="1" -->
+                <!--         Grid.Column="1" -->
+                <!--         RowSpacing="0"> -->
+                <!--         <Image Aspect="AspectFill" -->
+                <!--                Source="img_3.png"/> -->
+                <!--     </Grid> -->
+                <!-- </Grid> -->
+                <!-- BOOKING -->
+              <!--   <Grid -->
+              <!--       ColumnSpacing="0" -->
+              <!--       RowSpacing="0" -->
+              <!--       Grid.Row="1"> -->
+              <!--       <Grid.ColumnDefinitions> -->
+              <!--           <ColumnDefinition /> -->
+              <!--           <ColumnDefinition /> -->
+              <!--       </Grid.ColumnDefinitions> -->
+              <!--       <Grid.RowDefinitions> -->
+              <!--           <RowDefinition Height="4.5*" /> -->
+              <!--           <RowDefinition Height="5.5*" /> -->
+              <!--       </Grid.RowDefinitions> -->
+              <!--       ~1~ ROOM TEMPERATURE @1@ -->
+              <!--       <Grid -->
+              <!--           Grid.Row="0" -->
+              <!--           Grid.Column="0" -->
+              <!--           BackgroundColor="{StaticResource ChartBackgroundColor}"> -->
+              <!--           <microcharts:ChartView Chart="{Binding TemperatureChart}" -->
+              <!--                                  Margin="12, 24, 12, 12" /> -->
+              <!--                                   -->
+              <!--        -->
+              <!--           <Label   -->
+              <!--               Text="{extensions:Translate RoomTemperature}" -->
+              <!--               Style="{StaticResource ChartTextStyle}"/> -->
+              <!--       </Grid> -->
+              <!--       ~1~ AMBIENT LIGHT @1@ -->
+              <!--       <Grid -->
+              <!--           Grid.Row="0" -->
+              <!--           Grid.Column="1" -->
+              <!--           BackgroundColor="{StaticResource ChartBackgroundColor}"> -->
+              <!--           <Grid.RowDefinitions> -->
+              <!--               <RowDefinition Height="*" /> -->
+              <!--               <RowDefinition Height="*" /> -->
+              <!--           </Grid.RowDefinitions> -->
+              <!-- -->
+              <!--           <microcharts:ChartView Grid.Row="0"  -->
+              <!--                                  Chart="{Binding LightChart}" -->
+											   <!-- Margin="16, 36, 16, 0"  -->
+						        <!--                /> -->
+              <!--            -->
+              <!--           <Label      -->
+              <!--               Text="{extensions:Translate AmbientLight}" -->
+              <!--               Style="{StaticResource ChartTextStyle}"/> -->
+              <!--                                   -->
+              <!--           <Image  -->
+              <!--               Grid.Row="1" -->
+              <!--               Aspect="AspectFit" -->
+              <!--               Margin="16, 12, 16, 6" -->
+              <!--               Source="be_green.png" -->
+              <!--               /> -->
+              <!--           <microcharts:ChartView     -->
+              <!--               Grid.Row="1" -->
+              <!--               Chart="{Binding GreenChart}" -->
+              <!--               VerticalOptions="End" -->
+              <!--               IsVisible="false" /> -->
+              <!--           <Label      -->
+              <!--               Grid.Row="1" -->
+              <!--               Text="{extensions:Translate BeGreen}" -->
+              <!--               Style="{StaticResource BeGreenTextStyle}"/> -->
+              <!--       </Grid> -->
+              <!--       ~1~ RESTAURANT @1@ -->
+              <!--       <Grid -->
+              <!--           Grid.Row="1" -->
+              <!--           Grid.Column="0" -->
+              <!--           BackgroundColor="{StaticResource WhiteColor}"> -->
+              <!--           <Grid.RowDefinitions> -->
+              <!--               <RowDefinition Height="3*" /> -->
+              <!--               <RowDefinition Height="7*" /> -->
+              <!--               <RowDefinition Height="Auto" /> -->
+              <!--           </Grid.RowDefinitions> -->
+              <!--           <StackLayout -->
+              <!--               Grid.Row="0" -->
+              <!--               Orientation="Horizontal"> -->
+              <!--               <Label -->
+              <!--                   Text="{extensions:Translate Suggestions}" -->
+              <!--                   Style="{StaticResource SuggestionsTextStyle}"/> -->
+              <!--               <Label    -->
+              <!--                   Text="{extensions:Translate SeeAll}" -->
+              <!--                   HorizontalOptions="EndAndExpand" -->
+              <!--                   Style="{StaticResource SeeAllTextStyle}"/> -->
+              <!--           </StackLayout> -->
+              <!--           <StackLayout -->
+              <!--               Grid.Row="1"> -->
+              <!--               <Label             -->
+              <!--                   Text="{extensions:Translate Restaurant}" -->
+              <!--                   Style="{StaticResource RestaurantTextStyle}"/> -->
+              <!--               <Label    -->
+              <!--                   Text="{extensions:Translate EatToday}" -->
+              <!--                   Style="{StaticResource RestaurantDetailTextStyle}"/> -->
+              <!--               <StackLayout.GestureRecognizers> -->
+              <!--                   <TapGestureRecognizer  -->
+              <!--                       Command="{Binding SuggestionsCommand}" /> -->
+              <!--               </StackLayout.GestureRecognizers> -->
+              <!--           </StackLayout> -->
+              <!--           <Grid    -->
+              <!--               Grid.Row="2" -->
+              <!--               Style="{StaticResource GoMyRoomPanel2Style}"> -->
+              <!--               <Label     -->
+              <!--                   Text="{extensions:Translate GoMyRoomMayus}" -->
+              <!--                   Style="{StaticResource BookTextStyle}"/> -->
+              <!--               <Grid.GestureRecognizers> -->
+              <!--                   <TapGestureRecognizer  -->
+              <!--                       Command="{Binding GoMyRoomCommand}" /> -->
+              <!--               </Grid.GestureRecognizers> -->
+              <!--           </Grid> -->
+              <!--       </Grid> -->
+              <!--       ~1~ MORE INFO @1@ -->
+              <!--       <Grid -->
+              <!--           Grid.Row="1" -->
+              <!--           Grid.Column="1" -->
+              <!--           RowSpacing="0"> -->
+              <!--           <Grid.RowDefinitions> -->
+              <!--               <RowDefinition Height="*" /> -->
+              <!--               <RowDefinition Height="Auto" /> -->
+              <!--           </Grid.RowDefinitions> -->
+              <!--           <Image  -->
+              <!--               Grid.Row="0" -->
+              <!--               Aspect="AspectFill" -->
+              <!--               Source="img_3.png"/> -->
+              <!--           <Grid    -->
+              <!--               Grid.Row="1" -->
+              <!--               Style="{StaticResource BookConferencePanel2Style}"> -->
+              <!--               <Label       -->
+              <!--                   Text="{extensions:Translate BookConferenceMayus}" -->
+              <!--                   Style="{StaticResource BookTextStyle}"/> -->
+              <!--               <Grid.GestureRecognizers> -->
+              <!--                   <TapGestureRecognizer  -->
+              <!--                       Command="{Binding BookConferenceCommand}" /> -->
+              <!--               </Grid.GestureRecognizers> -->
+              <!--           </Grid> -->
+              <!--       </Grid> -->
+              <!--   </Grid> -->
+            </Grid>
+            <ActivityIndicator 
+                AutomationId="activityindicator"
+                Color="{StaticResource AccentColor}"
+                IsRunning="{Binding IsBusy}" 
+                IsVisible="{Binding IsBusy}" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

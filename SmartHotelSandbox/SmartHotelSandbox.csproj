@@ -20,12 +20,50 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Microcharts.Maui" Version="1.0.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0-preview.6.23329.7" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="5.2.0" />
 		<PackageReference Include="FFImageLoadingCompat.Maui" Version="0.1.1" />
+		<PackageReference Include="Microsoft.Maui.Controls.Maps" Version="8.0.0-preview.7.8842" />
+		<PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
 	</ItemGroup>
+
+
+
+	<ItemGroup>
+	  <Reference Include="Microsoft.iOS">
+	    <HintPath>..\..\..\..\..\usr\local\share\dotnet\packs\Microsoft.iOS.Ref\16.4.8694-net8-p7\ref\net8.0\Microsoft.iOS.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
+
+
+
+
+
+
+
+	<ItemGroup>
+	  <Compile Update="Platforms\iOS\Handlers\CustomMapHandler.cs">
+	    <ExcludeFromCurrentConfiguration>true</ExcludeFromCurrentConfiguration>
+	  </Compile>
+
+
+
+	</ItemGroup>
+
+
+
+
+
+
+
+	<ItemGroup>
+	  <Folder Include="MarkupExtensions\" />
+	</ItemGroup>
+
+
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
     <CreatePackage>false</CreatePackage>
